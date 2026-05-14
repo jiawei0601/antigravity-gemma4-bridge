@@ -41,9 +41,23 @@ def chat_with_gemma(prompt, model='gemma4:26b'):
 
 if __name__ == "__main__":
     import argparse
+    import json
+    import os
+
+    # 嘗試從 settings.json 讀取預設模型
+    default_model = "gemma4:26b"
+    settings_path = os.path.join(os.path.dirname(__file__), "settings.json")
+    if os.path.exists(settings_path):
+        try:
+            with open(settings_path, 'r') as f:
+                settings = json.load(f)
+                default_model = settings.get("default_model", default_model)
+        except:
+            pass
+
     parser = argparse.ArgumentParser(description="Antigravity Gemma 4 Bridge")
     parser.add_argument("prompt", nargs="?", default="請用繁體中文向我打招呼，並自我介紹。", help="你的問題或指令")
-    parser.add_argument("--model", default="gemma4:26b", help="指定的模型名稱 (例如: gemma4:e2b, gemma4:26b)")
+    parser.add_argument("--model", default=default_model, help=f"指定的模型名稱 (預設: {default_model})")
     
     args = parser.parse_args()
     chat_with_gemma(args.prompt, model=args.model)
