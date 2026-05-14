@@ -1,3 +1,7 @@
+﻿請扮演 AI 專家，根據以下 main.py 的代碼，產出符合 Matt's skills 原則的 CONTEXT.md (領域語言定義) 與 docs/adr/0001-matt-skills-refactor.md (架構決策)。
+
+請務必針對這個 'Antigravity Local Bridge' 專案進行具體分析。
+代碼如下：
 import ollama
 import sys
 import io
@@ -5,19 +9,18 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 
-# 強制設定輸出為 UTF-8 以支援 Emoji 與繁體中文
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# 撘瑕閮剖?頛詨??UTF-8 隞交??Emoji ??擃葉??sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 console = Console()
 
 def chat_with_gemma(prompt, model='gemma4:26b'):
     """
-    與本地 Gemma 4 模型進行通訊
+    ???Gemma 4 璅∪??脰???
     """
     try:
-        console.print(Panel(f"[bold blue]Antigravity Local Bridge[/bold blue]\n[dim]正在調用模型: {model}[/dim]", border_style="blue"))
+        console.print(Panel(f"[bold blue]Antigravity Local Bridge[/bold blue]\n[dim]甇?隤輻璅∪?: {model}[/dim]", border_style="blue"))
         
-        # 發送請求給 Ollama
+        # ?潮?瘙策 Ollama
         response = ollama.chat(
             model=model,
             messages=[
@@ -34,13 +37,13 @@ def chat_with_gemma(prompt, model='gemma4:26b'):
             print(content, end='', flush=True)
             full_response += content
         
-        print("\n") # 換行
+        print("\n") # ??
         return full_response
 
     except Exception as e:
-        console.print(f"[bold red]錯誤:[/bold red] {str(e)}")
+        console.print(f"[bold red]?航炊:[/bold red] {str(e)}")
         if "not found" in str(e).lower():
-            console.print(f"[yellow]提示: 請執行 `ollama pull {model}` 來下載模型。[/yellow]")
+            console.print(f"[yellow]?內: 隢銵?`ollama pull {model}` 靘?頛芋?/yellow]")
         return None
 
 if __name__ == "__main__":
@@ -48,8 +51,7 @@ if __name__ == "__main__":
     import json
     import os
 
-    # 嘗試從 settings.json 讀取預設模型
-    default_model = "gemma4:26b"
+    # ?岫敺?settings.json 霈??閮剜芋??    default_model = "gemma4:26b"
     settings_path = os.path.join(os.path.dirname(__file__), "settings.json")
     if os.path.exists(settings_path):
         try:
@@ -60,8 +62,9 @@ if __name__ == "__main__":
             pass
 
     parser = argparse.ArgumentParser(description="Antigravity Gemma 4 Bridge")
-    parser.add_argument("prompt", nargs="?", default="請用繁體中文向我打招呼，並自我介紹。", help="你的問題或指令")
-    parser.add_argument("--model", default=default_model, help=f"指定的模型名稱 (預設: {default_model})")
+    parser.add_argument("prompt", nargs="?", default="隢蝜?銝剜??????潘?銝西??蝝嫘?, help="雿?????隞?)
+    parser.add_argument("--model", default=default_model, help=f"???芋??蝔?(?身: {default_model})")
     
     args = parser.parse_args()
     chat_with_gemma(args.prompt, model=args.model)
+
