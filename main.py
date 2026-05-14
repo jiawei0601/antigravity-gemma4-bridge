@@ -6,7 +6,7 @@ from rich.panel import Panel
 
 console = Console()
 
-def chat_with_gemma(prompt, model='gemma4:e2b'):
+def chat_with_gemma(prompt, model='gemma4:26b'):
     """
     與本地 Gemma 4 模型進行通訊
     """
@@ -22,7 +22,7 @@ def chat_with_gemma(prompt, model='gemma4:e2b'):
             stream=True
         )
 
-        console.print(f"\n[bold green]Gemma 4:[/bold green]")
+        console.print(f"\n[bold green]Gemma 4 ({model}):[/bold green]")
         
         full_response = ""
         for chunk in response:
@@ -40,9 +40,10 @@ def chat_with_gemma(prompt, model='gemma4:e2b'):
         return None
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        user_prompt = " ".join(sys.argv[1:])
-    else:
-        user_prompt = "請用繁體中文向我打招呼，並自我介紹。"
+    import argparse
+    parser = argparse.ArgumentParser(description="Antigravity Gemma 4 Bridge")
+    parser.add_argument("prompt", nargs="?", default="請用繁體中文向我打招呼，並自我介紹。", help="你的問題或指令")
+    parser.add_argument("--model", default="gemma4:26b", help="指定的模型名稱 (例如: gemma4:e2b, gemma4:26b)")
     
-    chat_with_gemma(user_prompt)
+    args = parser.parse_args()
+    chat_with_gemma(args.prompt, model=args.model)
