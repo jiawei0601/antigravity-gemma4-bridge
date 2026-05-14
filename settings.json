@@ -1,0 +1,7 @@
+{
+    "agent_name": "Antigravity",
+    "default_model": "gemma4:26b",
+    "fallback_model": "gemma4:e2b",
+    "local_bridge_enabled": true,
+    "last_updated": "2026-05-14T17:09:00Z"
+}
