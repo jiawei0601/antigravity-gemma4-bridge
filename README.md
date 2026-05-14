@@ -42,8 +42,26 @@ python main.py "你的問題或指令"
 python main.py "你的問題" --model gemma4:e2b
 ```
 
-### 與 Antigravity 整合
-當 Antigravity 需要進行本地分析時，可以直接呼叫此腳本。
+### 與 Antigravity 整合 (透過 MCP)
+本專案支援 **Model Context Protocol (MCP)**，讓 Antigravity 可以像使用內建工具一樣直接調用本地的 Gemma 4。
+
+#### 1. 執行 MCP Server
+確保已安裝 `fastmcp` (已包含在 `requirements.txt` 中)，然後在終端機執行：
+```bash
+python mcp_server.py
+```
+
+#### 2. 在 Antigravity (IDE) 中配置
+在你的 IDE (例如 Cursor 或 VS Code) 的 MCP 設定中新增一個 Server：
+- **Name**: Gemma4-Bridge
+- **Type**: command
+- **Command**: `python c:/Users/chang/OneDrive/Documents/AG/antigravity-gemma4-bridge/mcp_server.py`
+
+#### 3. 使用方法
+在對話中，你可以直接要求 Antigravity：
+> 「請使用 query_gemma4 幫我分析這段程式碼」
+
+Antigravity 會自動調用本地的 Gemma 4 模型並獲取結果。
 
 ## 授權
 MIT License
